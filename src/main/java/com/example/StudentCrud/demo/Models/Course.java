@@ -2,10 +2,11 @@ package com.example.StudentCrud.demo.Models;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "course ")
+@Table(name = "course")
 public class Course implements Serializable {
 
     @Id
@@ -16,14 +17,21 @@ public class Course implements Serializable {
     public String name;
     public int maximumParticipants;
 
+    @ManyToMany(mappedBy = "registeredCourses")
+    public List<Student> enrolledStudents;
+
     public Course() {
     }
 
-    public Course(long id, String name, int maximumParticipants) {
+    public Course(long id, String name, int maximumParticipants, List<Student> enrolledStudents) {
         this.id = id;
         this.name = name;
         this.maximumParticipants = maximumParticipants;
+        this.enrolledStudents = enrolledStudents;
     }
+
+
+
 
     public long getId() {
         return id;
@@ -47,6 +55,14 @@ public class Course implements Serializable {
 
     public void setMaximumParticipants(int maximumParticipants) {
         this.maximumParticipants = maximumParticipants;
+    }
+
+    public List<Student> getEnrolledStudents() {
+        return enrolledStudents;
+    }
+
+    public void setEnrolledStudents(List<Student> enrolledStudents) {
+        this.enrolledStudents = enrolledStudents;
     }
 
     @Override

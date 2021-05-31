@@ -3,6 +3,7 @@ import com.fasterxml.jackson.databind.JsonSerializable;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -13,18 +14,28 @@ public class Student implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public long id;
-
     @Column(name = "first_name")
-    public String firstName;
+    public
+    String firstName;
+
+    @ManyToMany
+    @JoinTable(
+            name = "studentCourses",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id"))
+    List<Course> registeredCourses;
 
     public Student() {
         super() ;
     }
 
-    public Student(long id, String firstName) {
+    public Student(long id, String firstName, List<Course> registeredCourses) {
         this.id = id;
         this.firstName = firstName;
+        this.registeredCourses = registeredCourses;
     }
+
+
 
     public long getId() {
         return id;
@@ -40,6 +51,14 @@ public class Student implements Serializable {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public List<Course> getRegisteredCourses() {
+        return registeredCourses;
+    }
+
+    public void setRegisteredCourses(List<Course> registeredCourses) {
+        this.registeredCourses = registeredCourses;
     }
 
     @Override
