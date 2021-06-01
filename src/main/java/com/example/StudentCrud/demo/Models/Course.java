@@ -1,5 +1,9 @@
 package com.example.StudentCrud.demo.Models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -7,6 +11,9 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "course")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Course implements Serializable {
 
     @Id
@@ -18,6 +25,7 @@ public class Course implements Serializable {
     public int maximumParticipants;
 
     @ManyToMany(mappedBy = "registeredCourses")
+    @JsonManagedReference
     public List<Student> enrolledStudents;
 
     public Course() {
@@ -84,6 +92,7 @@ public class Course implements Serializable {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", maximumParticipants=" + maximumParticipants +
+                ", enrolledStudents=" + enrolledStudents +
                 '}';
     }
 }

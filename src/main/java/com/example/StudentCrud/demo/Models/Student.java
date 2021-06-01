@@ -1,5 +1,8 @@
 package com.example.StudentCrud.demo.Models;
-import com.fasterxml.jackson.databind.JsonSerializable;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -9,6 +12,9 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "student")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Student implements Serializable {
     private static final long serialVersionUID = -2343243243242432341L;
     @Id
